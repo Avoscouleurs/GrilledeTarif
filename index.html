@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille Tarifaire 2025 - A vos couleurs</title>
+    <style>
+        :root {
+            --primary-dark: #0a5c54;
+            --primary-medium: #0f7d73;
+            --primary-light: #d1fae5;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --background: #f9fafb;
+            --card-background: #ffffff;
+            --border-light: #e5e7eb;
+            --warning: #d97706;
+            --error: #dc2626;
+            --price-color: #1f2937;
+            --avc-green: #1a8072;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.4;
+            color: var(--text-primary);
+            background-color: var(--background);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        /* Contact ULTRA-COMPACT - Émojis + infos seulement */
+        .contact-top {
+            background: linear-gradient(135deg, var(--avc-green) 0%, var(--primary-medium) 50%, var(--primary-dark) 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(26, 128, 114, 0.2);
+            margin-bottom: -3px;
+            z-index: 2;
+        }
+
+        .contact-top::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 6px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            font-weight: 600;
+            justify-content: center;
+            font-size: 0.75em;
+        }
+
+        .contact-badge a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* En-tête COMPACT avec seul logo */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+            color: white;
+            padding: 15px 15px 18px;
+            border-radius: 0 0 10px 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 16px rgba(15, 125, 115, 0.15);
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding-top: 5px;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-avc {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            filter: brightness(1.1) contrast(1.1);
+            background: transparent;
+        }
+
+        .header-text {
+            flex: 1;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            font-weight: 800;
+        }
+
+        header p {
+            font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+            opacity: 0.95;
+            margin-bottom: 3px;
+            font-weight: 500;
+        }
+
+        header a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* Bouton PDF COMPACT */
+        .pdf-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary-medium), var(--primary-dark));
+            color: #fff;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 0.9em;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(15, 125, 115, 0.25);
+            margin: 0 auto 12px auto;
+            display: block;
+            width: fit-content;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* Navigation ULTRA-COMPACTE - Tout visible sans défilement */
+        .navigation {
+            background: var(--card-background);
+            padding: 10px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+            border: 1px solid var(--border-light);
+        }
+
+        .nav-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .nav-container {
+            position: relative;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 8px;
+            padding: 3px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .nav-grid {
+            display: flex;
+            gap: 2px;
+            min-width: max-content;
+            position: relative;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.7em;
+            white-space: nowrap;
+            position: relative;
+            z-index: 2;
+            min-width: 110px;
+            text-align: center;
+        }
+
+        .nav-link.active {
+            color: white;
+            font-weight: 700;
+        }
+
+        .nav-indicator {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            height: calc(100% - 6px);
+            background: linear-gradient(135deg, var(--primary-medium) 0%, var(--primary-dark) 100%);
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(15, 125, 115, 0.3);
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 1;
+            width: 110px;
+        }
+
+        /* Sections ULTRA-COMPACTES - Logos filigranes supprimés */
+        .section {
+            background: var(--card-background);
+            margin-bottom: 12px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-light);
+        }
+
+        .section h2 {
+            color: var(--primary-dark);
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 3px solid var(--primary-medium);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .section h3 {
+            color: var(--primary-dark);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            margin: 12px 0 8px 0;
+            padding-left: 8px;
+            border-left: 3px solid var(--primary-medium);
+            font-weight: 700;
+        }
+
+        /* Tableaux ULTRA-COMPACTS */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+            border: 1px solid var(--border-light);
+            margin: 10px 0;
+        }
+
+        table {
+            width: 100%;
+            min-width: 500px;
+            border-collapse: collapse;
+            background: var(--card-background);
+        }
+
+        th {
+            background: var(--primary-dark);
+            color: white;
+            padding: 6px 4px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8em;
+            letter-spacing: 0.3px;
+        }
+
+        th:first-child {
+            text-align: left !important;
+            font-weight: 800 !important;
+            color: white !important;
+            background: var(--primary-dark) !important;
+            min-width: 100px;
+        }
+
+        td {
+            padding: 4px 3px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--price-color);
+            font-weight: 600;
+            font-size: 0.8em;
+            min-width: 60px;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-weight: 700;
+            color: var(--primary-dark);
+            min-width: 100px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        /* Grilles de prix COMPACTES */
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .price-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 10px 15px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-medium);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .price-item span:first-child {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.85em;
+        }
+
+        .price-item span:last-child {
+            font-weight: 800;
+            color: var(--price-color);
+            font-size: 0.95em;
+        }
+
+        /* Colonnes COMPACTES */
+        .columns-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+            margin: 10px 0;
+        }
+
+        .column {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+        }
+
+        .column h4 {
+            color: var(--primary-dark);
+            font-size: 1em;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid var(--primary-medium);
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .column .price-item {
+            margin-bottom: 5px;
+            background: white;
+            border-left: 2px solid var(--primary-medium);
+            padding: 6px 10px;
+        }
+
+        /* Encadrés COMPACTS */
+        .note {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border: 1px solid var(--warning);
+            color: #92400e;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 8px 0;
+            border-left: 3px solid var(--warning);
+            font-weight: 500;
+            font-size: 0.85em;
+        }
+
+        .warning {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            border: 1px solid var(--error);
+            color: #991b1b;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 8px 0;
+            border-left: 3px solid var(--error);
+            font-weight: 500;
+            font-size: 0.85em;
+        }
+
+        /* Footer COMPACT - Sans logo */
+        .contact-bottom {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 50%, var(--avc-green) 100%);
+            color: white;
+            text-align: center;
+            padding: 15px 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            box-shadow: 0 6px 20px rgba(10, 92, 85, 0.2);
+        }
+
+        .footer-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 6px;
+        }
+
+        .footer-info p {
+            margin: 3px 0;
+            font-size: 0.8em;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            justify-content: center;
+        }
+
+        .contact-bottom a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* Bouton retour COMPACT */
+        .back-to-top {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--primary-medium), var(--primary-dark));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 16px rgba(15, 125, 115, 0.3);
+            border: 2px solid white;
+            z-index: 1000;
+        }
+
+        /* Responsive COMPACT */
+        @media (max-width: 768px) {
+            .container { padding: 10px; }
+            .contact-top { padding: 6px 10px; }
+            .contact-info { grid-template-columns: 1fr; gap: 4px; }
+            .contact-badge { padding: 4px 8px; font-size: 0.7em; }
+            header { padding: 12px 12px 15px; }
+            .logo-avc { width: 70px; height: 70px; }
+            .navigation { padding: 8px; }
+            .nav-title { margin-bottom: 6px; }
+            .nav-link { min-width: 90px; padding: 5px 6px; font-size: 0.65em; }
+            .nav-indicator { width: 90px; }
+            .section { padding: 12px 10px; }
+            .price-grid, .columns-layout { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 8px; }
+            .logo-avc { width: 60px; height: 60px; }
+            .nav-link { min-width: 75px; padding: 4px 5px; font-size: 0.6em; }
+            .nav-indicator { width: 75px; }
+            .section { padding: 10px 8px; }
+        }
+
+        /* PDF ULTRA-CONDENSÉ - Maximum densité + Saut de page pour Impression Numérique */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 5mm;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            body { 
+                background: white !important; 
+                color: black !important; 
+                font-size: 6pt !important;
+                line-height: 1.1 !important;
+                font-family: Arial, sans-serif !important;
+            }
+
+            .navigation, .back-to-top, .pdf-download { 
+                display: none !important; 
+            }
+
+            .container { 
+                max-width: none !important; 
+                padding: 0 !important; 
+                margin: 0 !important;
+                width: 100% !important;
+            }
+
+            .contact-top, .contact-bottom {
+                background: var(--primary-dark) !important;
+                color: white !important;
+                padding: 2mm !important;
+                margin: 1mm 0 !important;
+                border-radius: 1mm !important;
+                box-shadow: none !important;
+                page-break-inside: avoid !important;
+                font-size: 5pt !important;
+            }
+
+            .contact-top::before, .contact-bottom::before {
+                display: none !important;
+            }
+
+            .contact-info, .footer-info {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 1mm !important;
+            }
+
+            .contact-badge {
+                display: inline-flex !important;
+                margin: 0 !important;
+                background: rgba(255,255,255,0.1) !important;
+                border: none !important;
+                padding: 0.5mm 1mm !important;
+                border-radius: 0.5mm !important;
+                font-size: 4pt !important;
+            }
+
+            header { 
+                background: var(--primary-dark) !important;
+                color: white !important;
+                padding: 2mm !important;
+                margin: 1mm 0 !important;
+                page-break-inside: avoid !important;
+            }
+
+            .logo-avc {
+                width: 15mm !important;
+                height: 15mm !important;
+            }
+
+            header h1 {
+                font-size: 12pt !important;
+                margin: 1mm 0 !important;
+            }
+
+            header p {
+                font-size: 6pt !important;
+                margin: 0.5mm 0 !important;
+            }
+
+            .section { 
+                box-shadow: none !important; 
+                border: 0.5mm solid var(--primary-dark) !important;
+                margin: 1mm 0 !important;
+                padding: 2mm !important;
+                page-break-inside: auto !important;
+                background: white !important;
+            }
+
+            /* SAUT DE PAGE FORCÉ AVANT IMPRESSION NUMÉRIQUE */
+            #numerique {
+                page-break-before: always !important;
+            }
+
+            .section h2 {
+                color: var(--primary-dark) !important;
+                border-bottom: 0.5mm solid var(--primary-dark) !important;
+                font-size: 9pt !important;
+                margin-bottom: 1mm !important;
+                padding-bottom: 0.5mm !important;
+            }
+
+            .section h3 {
+                color: var(--primary-dark) !important;
+                font-size: 7pt !important;
+                margin: 1mm 0 0.5mm 0 !important;
+                border-left: 0.5mm solid var(--primary-dark) !important;
+                padding-left: 1mm !important;
+            }
+
+            /* TABLEAUX PDF ULTRA-CONDENSÉS */
+            .table-container {
+                overflow: visible !important;
+                box-shadow: none !important;
+                border: 0.5mm solid #333 !important;
+                margin: 1mm 0 !important;
+                page-break-inside: auto !important;
+                width: 100% !important;
+            }
+
+            table {
+                width: 100% !important;
+                table-layout: fixed !important;
+                font-size: 6pt !important;
+                border-collapse: collapse !important;
+                page-break-inside: auto !important;
+            }
+
+            thead {
+                display: table-header-group !important;
+            }
+
+            th { 
+                background: var(--primary-dark) !important; 
+                color: white !important; 
+                border: 0.2mm solid #333 !important;
+                padding: 0.5mm !important;
+                font-size: 6pt !important;
+                font-weight: bold !important;
+                text-align: center !important;
+                word-wrap: break-word !important;
+            }
+
+            th:first-child {
+                text-align: left !important;
+                width: 17% !important;
+            }
+
+            td {
+                border: 0.2mm solid #666 !important;
+                padding: 0.3mm !important;
+                color: black !important;
+                font-size: 6pt !important;
+                text-align: center !important;
+                word-wrap: break-word !important;
+            }
+
+            td:first-child {
+                text-align: left !important;
+                font-weight: bold !important;
+                color: var(--primary-dark) !important;
+                background: #f8f8f8 !important;
+                width: 17% !important;
+            }
+
+            tbody tr:nth-child(even) {
+                background: #f5f5f5 !important;
+            }
+
+            tbody tr:nth-child(even) td:first-child {
+                background: #f0f0f0 !important;
+            }
+
+            /* GRILLES 2 COLONNES pour optimiser l'espace vertical */
+            .price-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 1mm !important;
+                margin: 1mm 0 !important;
+            }
+
+            .price-item { 
+                border-left: 0.5mm solid var(--primary-dark) !important; 
+                background: #f8f8f8 !important;
+                margin: 0 !important;
+                padding: 0.5mm 1mm !important;
+                display: flex !important;
+                justify-content: space-between !important;
+                font-size: 6pt !important;
+                page-break-inside: avoid !important;
+            }
+
+            .columns-layout {
+                display: grid !important;
+                grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+                gap: 1mm !important;
+                margin: 1mm 0 !important;
+            }
+
+            .column {
+                margin: 0 !important;
+                border: 0.3mm solid #666 !important;
+                padding: 1mm !important;
+                background: #f8f8f8 !important;
+                page-break-inside: auto !important;
+            }
+
+            .column h4 {
+                font-size: 6pt !important;
+                margin-bottom: 1mm !important;
+                color: var(--primary-dark) !important;
+                border-bottom: 0.3mm solid var(--primary-dark) !important;
+                padding-bottom: 0.5mm !important;
+            }
+
+            .note, .warning { 
+                border: 0.3mm solid #666 !important; 
+                background: #f8f8f8 !important;
+                color: black !important;
+                padding: 1mm !important;
+                margin: 0.5mm 0 !important;
+                font-size: 5pt !important;
+                page-break-inside: avoid !important;
+            }
+
+            .note {
+                border-left: 0.5mm solid #d97706 !important;
+            }
+
+            .warning {
+                border-left: 0.5mm solid #dc2626 !important;
+            }
+
+            .footer-info p {
+                display: inline-block !important;
+                margin: 0.3mm 0.5mm !important;
+                font-size: 4pt !important;
+            }
+
+            a[href]:after { 
+                content: "" !important; 
+            }
+
+            h2, h3 {
+                page-break-after: avoid !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Contact ÉPURÉ - Émojis + infos seulement -->
+        <div class="contact-top">
+            <div class="contact-info">
+                <div class="contact-badge">📍 5 rue Jacques Guignard, 31820 PIBRAC</div>
+                <div class="contact-badge">📞 <a href="tel:0561915246">05.61.91.52.46</a></div>
+                <div class="contact-badge">✉️ <a href="mailto:contact@avoscouleurs.com">contact@avoscouleurs.com</a></div>
+            </div>
+        </div>
+
+        <header id="top">
+            <div class="header-content">
+                <div class="logo-section">
+                    <!-- *** REMPLACE MOI : SEUL LOGO BASE64 CONSERVÉ *** -->
+                    <img src="data:image/png;base64,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" 
+                         alt="A vos couleurs - Logo AVC 2022" 
+                         class="logo-avc"
+                         onerror="this.style.display='none';">
+                </div>
+                
+                <div class="header-text">
+                    <h1>Grille Tarifaire 2025</h1>
+                    <p><strong>A vos couleurs</strong> - Spécialiste en personnalisation textile</p>
+                    <p>Site web : <a href="https://avoscouleurs.com/" target="_blank" rel="noopener">www.avoscouleurs.com</a></p>
+                </div>
+            </div>
+        </header>
+
+        <button class="pdf-download" onclick="window.print()">📄 Télécharger la Grille Tarifaire (PDF)</button>
+
+        <!-- Navigation ULTRA-COMPACTE - Tout visible sans défilement -->
+        <nav class="navigation">
+            <div class="nav-title">🎯 Navigation Rapide</div>
+            <div class="nav-container">
+                <div class="nav-indicator"></div>
+                <div class="nav-grid">
+                    <a href="#serigraphie" class="nav-link">🎨 Sérigraphie</a>
+                    <a href="#transferts" class="nav-link">📋 Presse à chaud</a>
+                    <a href="#dtf" class="nav-link">🖨️ DTF</a>
+                    <a href="#numerique" class="nav-link">💻 Numérique</a>
+                    <a href="#broderie" class="nav-link">🧵 Broderie</a>
+                    <a href="#sublimation" class="nav-link">🌈 Sublimation</a>
+                    <a href="#serigraphique" class="nav-link">📄 Transferts Sérigraphiques</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Sections ULTRA-COMPACTES - Logos filigranes supprimés -->
+        <section id="frais-annexes" class="section">
+            <h2>📋 Frais Annexes</h2>
+            
+            <h3>📦 Déballage</h3>
+            <div class="price-grid">
+                <div class="price-item"><span>Déballage simple</span><span>0,10€/u HT</span></div>
+                <div class="price-item"><span>Déballage complexe</span><span>0,20€/u HT</span></div>
+            </div>
+            <div class="note">
+                <strong>Produits concernés :</strong><br>
+                • T-shirts, sweats, polos, doudounes, gilets haute visibilité, sacs à dos emballés individuellement<br>
+                • Parkas 4 en 1, parapluies, casquettes coquées, chemises emballés individuellement
+            </div>
+            <div class="warning">⚠️ <strong>Important :</strong> Tout textile non déballé entraînera des frais supplémentaires.</div>
+
+            <h3>⏰ Délais et Majorations</h3>
+            <div class="price-grid">
+                <div class="price-item"><span>Délai inférieur à 1 semaine</span><span>+10% HT</span></div>
+                <div class="price-item"><span>Délai inférieur à 2 semaines</span><span>+5% HT</span></div>
+            </div>
+
+            <h3>🚚 Frais de Transport</h3>
+            <div class="price-grid">
+                <div class="price-item"><span>Transport Express (24/48h par transporteur)</span><span>À partir de 35€/u HT</span></div>
+                <div class="price-item"><span>Transport Classique (48/72h par transporteur)</span><span>À partir de 25€/u HT</span></div>
+                <div class="price-item"><span>Livraison Proximité (par nos soins sur demande)</span><span>À partir de 12€/u HT</span></div>
+            </div>
+        </section>
+
+        <section id="serigraphie" class="section">
+            <h2>🎨 Sérigraphie</h2>
+            
+            <h3>Frais Techniques</h3>
+            <div class="price-grid">
+                <div class="price-item"><span>Maquette vectorisée</span><span>30€/u HT</span></div>
+                <div class="price-item"><span>Bon à tirer</span><span>15€/u HT</span></div>
+            </div>
+
+            <h3>Frais de Cliché</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Position</th><th>1 couleur</th><th>2 couleurs</th><th>3 couleurs</th><th>4 couleurs</th><th>5 couleurs</th><th>6 couleurs</th></tr></thead>
+                    <tbody>
+                        <tr><td>Maquette Cœur</td><td>7,00€ HT</td><td>10,00€ HT</td><td>14,00€ HT</td><td>19,00€ HT</td><td>23,00€ HT</td><td>27,00€ HT</td></tr>
+                        <tr><td>Maquette Dos</td><td>11,00€ HT</td><td>18,00€ HT</td><td>24,00€ HT</td><td>31,00€ HT</td><td>38,00€ HT</td><td>45,00€ HT</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Frais de Cadre</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Nombre de couleurs</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr></thead>
+                    <tbody><tr><td>Prix unitaire HT</td><td>15,00€</td><td>17,00€</td><td>21,00€</td><td>26,00€</td><td>31,00€</td><td>37,00€</td></tr></tbody>
+                </table>
+            </div>
+
+            <h3>Production Petit Format (&lt;100 cm²)</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Couleurs</th><th>Dès 1</th><th>Dès 20</th><th>Dès 50</th><th>Dès 100</th><th>Dès 200</th><th>Dès 500</th><th>Dès 1000</th><th>Dès 2000</th><th>Dès 3000</th><th>Dès 5000</th></tr></thead>
+                    <tbody>
+                        <tr><td>1 couleur</td><td>1,37€</td><td>1,16€</td><td>1,09€</td><td>0,92€</td><td>0,81€</td><td>0,65€</td><td>0,56€</td><td>0,40€</td><td>0,30€</td><td>0,28€</td></tr>
+                        <tr><td>2 couleurs</td><td>1,67€</td><td>1,41€</td><td>1,29€</td><td>1,04€</td><td>0,93€</td><td>0,78€</td><td>0,73€</td><td>0,52€</td><td>0,42€</td><td>0,35€</td></tr>
+                        <tr><td>3 couleurs</td><td>1,97€</td><td>1,66€</td><td>1,50€</td><td>1,16€</td><td>1,04€</td><td>0,89€</td><td>0,84€</td><td>0,62€</td><td>0,50€</td><td>0,40€</td></tr>
+                        <tr><td>4 couleurs</td><td>2,25€</td><td>1,91€</td><td>1,71€</td><td>1,28€</td><td>1,16€</td><td>0,99€</td><td>0,94€</td><td>0,71€</td><td>0,58€</td><td>0,44€</td></tr>
+                        <tr><td>5 couleurs</td><td>2,57€</td><td>2,17€</td><td>1,91€</td><td>1,41€</td><td>1,30€</td><td>1,11€</td><td>1,05€</td><td>0,81€</td><td>0,66€</td><td>0,49€</td></tr>
+                        <tr><td>6 couleurs</td><td>2,85€</td><td>2,41€</td><td>2,12€</td><td>1,53€</td><td>1,42€</td><td>1,21€</td><td>1,15€</td><td>0,91€</td><td>0,75€</td><td>0,55€</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Production Grand Format (&gt;100 cm²)</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Couleurs</th><th>Dès 1</th><th>Dès 20</th><th>Dès 50</th><th>Dès 100</th><th>Dès 200</th><th>Dès 500</th><th>Dès 1000</th><th>Dès 2000</th><th>Dès 3000</th><th>Dès 5000</th></tr></thead>
+                    <tbody>
+                        <tr><td>1 couleur</td><td>1,56€</td><td>1,32€</td><td>1,24€</td><td>1,05€</td><td>0,92€</td><td>0,74€</td><td>0,64€</td><td>0,46€</td><td>0,35€</td><td>0,32€</td></tr>
+                        <tr><td>2 couleurs</td><td>1,90€</td><td>1,61€</td><td>1,48€</td><td>1,19€</td><td>1,07€</td><td>0,89€</td><td>0,83€</td><td>0,60€</td><td>0,48€</td><td>0,40€</td></tr>
+                        <tr><td>3 couleurs</td><td>2,25€</td><td>1,90€</td><td>1,71€</td><td>1,32€</td><td>1,19€</td><td>1,02€</td><td>0,96€</td><td>0,71€</td><td>0,57€</td><td>0,45€</td></tr>
+                        <tr><td>4 couleurs</td><td>2,57€</td><td>2,18€</td><td>1,95€</td><td>1,46€</td><td>1,32€</td><td>1,13€</td><td>1,07€</td><td>0,81€</td><td>0,67€</td><td>0,50€</td></tr>
+                        <tr><td>5 couleurs</td><td>2,93€</td><td>2,48€</td><td>2,18€</td><td>1,61€</td><td>1,49€</td><td>1,27€</td><td>1,20€</td><td>0,92€</td><td>0,75€</td><td>0,56€</td></tr>
+                        <tr><td>6 couleurs</td><td>3,26€</td><td>2,76€</td><td>2,42€</td><td>1,75€</td><td>1,62€</td><td>1,39€</td><td>1,31€</td><td>1,04€</td><td>0,85€</td><td>0,62€</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="transferts" class="section">
+            <h2>📋 Pose de Transferts</h2>
+            <div class="price-grid">
+                <div class="price-item"><span>1 à 30 pièces</span><span>0,60€/u HT</span></div>
+                <div class="price-item"><span>31 à 100 pièces</span><span>0,50€/u HT</span></div>
+                <div class="price-item"><span>À partir de 101 pièces</span><span>0,40€/u HT</span></div>
+            </div>
+        </section>
+
+        <section id="dtf" class="section">
+            <h2>🖨️ Transferts DTF</h2>
+            <h3>Frais de Production</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Surface</th><th>Dès 1</th><th>Dès 6</th><th>Dès 11</th><th>Dès 21</th><th>Dès 51</th><th>Dès 101</th><th>Dès 201</th><th>Dès 501</th></tr></thead>
+                    <tbody>
+                        <tr><td>&lt;30cm²</td><td>0,18€</td><td>0,17€</td><td>0,16€</td><td>0,15€</td><td>0,14€</td><td>0,14€</td><td>0,12€</td><td>0,11€</td></tr>
+                        <tr><td>&lt;50cm²</td><td>0,30€</td><td>0,29€</td><td>0,27€</td><td>0,26€</td><td>0,24€</td><td>0,23€</td><td>0,20€</td><td>0,18€</td></tr>
+                        <tr><td>&lt;100cm²</td><td>0,60€</td><td>0,57€</td><td>0,54€</td><td>0,51€</td><td>0,48€</td><td>0,45€</td><td>0,39€</td><td>0,36€</td></tr>
+                        <tr><td>&lt;150cm²</td><td>0,90€</td><td>0,86€</td><td>0,81€</td><td>0,77€</td><td>0,72€</td><td>0,68€</td><td>0,59€</td><td>0,54€</td></tr>
+                        <tr><td>&lt;225cm²</td><td>1,32€</td><td>1,25€</td><td>1,19€</td><td>1,12€</td><td>1,06€</td><td>0,99€</td><td>0,86€</td><td>0,79€</td></tr>
+                        <tr><td>&lt;300cm²</td><td>1,50€</td><td>1,43€</td><td>1,35€</td><td>1,28€</td><td>1,20€</td><td>1,13€</td><td>0,98€</td><td>0,90€</td></tr>
+                        <tr><td>&lt;350cm²</td><td>1,80€</td><td>1,71€</td><td>1,62€</td><td>1,53€</td><td>1,44€</td><td>1,35€</td><td>1,17€</td><td>1,08€</td></tr>
+                        <tr><td>&lt;450cm²</td><td>2,10€</td><td>2,00€</td><td>1,89€</td><td>1,79€</td><td>1,68€</td><td>1,58€</td><td>1,37€</td><td>1,26€</td></tr>
+                        <tr><td>&lt;550cm²</td><td>2,40€</td><td>2,28€</td><td>2,16€</td><td>2,04€</td><td>1,92€</td><td>1,80€</td><td>1,56€</td><td>1,44€</td></tr>
+                        <tr><td>&lt;650cm²</td><td>2,70€</td><td>2,57€</td><td>2,43€</td><td>2,30€</td><td>2,16€</td><td>2,03€</td><td>1,76€</td><td>1,62€</td></tr>
+                        <tr><td>&lt;750cm²</td><td>3,00€</td><td>2,85€</td><td>2,70€</td><td>2,55€</td><td>2,40€</td><td>2,25€</td><td>1,95€</td><td>1,80€</td></tr>
+                        <tr><td>&lt;850cm²</td><td>3,30€</td><td>3,14€</td><td>2,97€</td><td>2,81€</td><td>2,64€</td><td>2,48€</td><td>2,15€</td><td>1,98€</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="price-grid">
+                <div class="price-item"><span>Prix au mètre linéaire</span><span>30€/m HT</span></div>
+            </div>
+            <div class="note">📞 Au-delà de 1000 pièces, consultez-nous pour un devis personnalisé.</div>
+        </section>
+
+        <!-- SECTION QUI PASSERA EN PAGE 2 DU PDF -->
+        <section id="numerique" class="section">
+            <h2>💻 Impression Numérique</h2>
+            
+            <div class="columns-layout">
+                <div class="column">
+                    <h4>Transfert Numérique</h4>
+                    <div class="price-item"><span>&lt;50cm²</span><span>0,50€/u HT</span></div>
+                    <div class="price-item"><span>&lt;100cm²</span><span>0,70€/u HT</span></div>
+                    <div class="price-item"><span>&lt;150cm²</span><span>0,90€/u HT</span></div>
+                    <div class="price-item"><span>&lt;225cm²</span><span>1,20€/u HT</span></div>
+                    <div class="price-item"><span>&lt;300cm²</span><span>1,30€/u HT</span></div>
+                    <div class="price-item"><span>&lt;350cm²</span><span>1,40€/u HT</span></div>
+                    <div class="price-item"><span>&lt;450cm²</span><span>1,50€/u HT</span></div>
+                    <div class="price-item"><span>&lt;550cm²</span><span>1,70€/u HT</span></div>
+                    <div class="price-item"><span>&lt;600cm²</span><span>1,90€/u HT</span></div>
+                </div>
+
+                <div class="column">
+                    <h4>Transfert Flex & Découpes</h4>
+                    <div class="price-item"><span>Transfert Flex</span><span>0,60€/u HT</span></div>
+                    <div class="price-item"><span>Numéro &lt;8cm</span><span>0,60€/u HT</span></div>
+                    <div class="price-item"><span>Numéro &lt;10cm</span><span>0,80€/u HT</span></div>
+                    <div class="price-item"><span>Numéro &lt;20cm</span><span>1,10€/u HT</span></div>
+                    <div class="price-item"><span>Numéro &lt;25cm</span><span>1,20€/u HT</span></div>
+                    <div class="price-item"><span>Découpe initiales</span><span>0,60€/u HT</span></div>
+                    <div class="price-item"><span>Découpe prénom cœur</span><span>0,75€/u HT</span></div>
+                    <div class="price-item"><span>Découpe prénom dos</span><span>2,30€/u HT</span></div>
+                </div>
+
+                <div class="column">
+                    <h4>Supports Publicitaires</h4>
+                    <div class="price-item"><span>Adhésif numérique</span><span>30€/m linéaire HT</span></div>
+                    <div class="price-item"><span>Banderole numérique</span><span>30€/m linéaire HT</span></div>
+                    <div class="price-item"><span>Panneau Dibond numérique</span><span>70€/m linéaire HT</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="broderie" class="section">
+            <h2>🧵 Broderie</h2>
+            <div class="price-grid">
+                <div class="price-item"><span>Frais de programme</span><span>46€/u HT</span></div>
+            </div>
+            <div class="note">📞 Pour toute demande de devis broderie, n'hésitez pas à nous consulter.</div>
+        </section>
+
+        <section id="sublimation" class="section">
+            <h2>🌈 Sublimation</h2>
+            
+            <h3>Transfert sur Article Monté</h3>
+            <div class="price-grid">
+                <div class="price-item"><span>Cœur/Opposé cœur/Manche + pose</span><span>1,50€/u HT</span></div>
+                <div class="price-item"><span>Dos/Poitrine + pose</span><span>2,50€/u HT</span></div>
+            </div>
+
+            <h3>Personnalisation Intégrale</h3>
+            <div class="note">
+                <strong>Nos offres de personnalisation intégrale :</strong><br>
+                • Serviettes de plage de différentes tailles • Bandanas • Tours de cou • Maillots de sport • Mugs • Gourdes<br><br>
+                📞 Pour toute demande de devis, n'hésitez pas à nous consulter.
+            </div>
+        </section>
+
+        <section id="serigraphique" class="section">
+            <h2>📄 Transferts Sérigraphiques</h2>
+            
+            <h3>Production Mono-couleur</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Surface</th><th>Dès 1</th><th>Dès 20</th><th>Dès 50</th><th>Dès 100</th><th>Dès 200</th><th>Dès 500</th><th>Dès 1000</th></tr></thead>
+                    <tbody>
+                        <tr><td>&lt;60cm²</td><td>1,40€</td><td>1,12€</td><td>0,87€</td><td>0,65€</td><td>0,55€</td><td>0,38€</td><td>0,29€</td></tr>
+                        <tr><td>&lt;140cm²</td><td>1,96€</td><td>1,47€</td><td>1,16€</td><td>0,87€</td><td>0,74€</td><td>0,51€</td><td>0,39€</td></tr>
+                        <tr><td>&lt;300cm²</td><td>2,52€</td><td>1,96€</td><td>1,54€</td><td>1,16€</td><td>0,98€</td><td>0,67€</td><td>0,52€</td></tr>
+                        <tr><td>&lt;600cm²</td><td>3,36€</td><td>2,31€</td><td>1,86€</td><td>1,51€</td><td>1,33€</td><td>0,90€</td><td>0,70€</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Production Multi-couleur</h3>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Surface</th><th>Dès 1</th><th>Dès 20</th><th>Dès 50</th><th>Dès 100</th><th>Dès 200</th><th>Dès 500</th><th>Dès 1000</th></tr></thead>
+                    <tbody>
+                        <tr><td>&lt;60cm²</td><td>3,50€</td><td>2,05€</td><td>1,31€</td><td>0,98€</td><td>0,91€</td><td>0,59€</td><td>0,44€</td></tr>
+                        <tr><td>&lt;140cm²</td><td>4,68€</td><td>2,73€</td><td>1,74€</td><td>1,32€</td><td>1,21€</td><td>0,78€</td><td>0,55€</td></tr>
+                        <tr><td>&lt;300cm²</td><td>6,23€</td><td>3,64€</td><td>2,31€</td><td>1,75€</td><td>1,61€</td><td>1,05€</td><td>0,74€</td></tr>
+                        <tr><td>&lt;600cm²</td><td>8,41€</td><td>4,92€</td><td>3,12€</td><td>2,37€</td><td>2,17€</td><td>1,42€</td><td>0,99€</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="note">📞 Au-delà de 1000 pièces, consultez-nous pour un devis personnalisé.</div>
+        </section>
+
+        <!-- Footer SANS logo -->
+        <div class="contact-bottom">
+            <div class="footer-content">
+                <p><strong>© 2025 A vos couleurs</strong> - Grille tarifaire 2025</p>
+                <div class="footer-info">
+                    <p>📍 5 rue Jacques Guignard, 31820 PIBRAC</p>
+                    <p>📞 05.61.91.52.46</p>
+                    <p>✉️ <a href="mailto:contact@avoscouleurs.com">contact@avoscouleurs.com</a></p>
+                    <p>🌐 <a href="https://avoscouleurs.com/" target="_blank" rel="noopener">www.avoscouleurs.com</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#top" class="back-to-top" aria-label="Retour en haut">↑</a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('.section');
+            const indicator = document.querySelector('.nav-indicator');
+
+            navLinks.forEach((link) => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetSection = document.querySelector(this.getAttribute('href'));
+                    if (targetSection) {
+                        const headerOffset = 60;
+                        const offsetPosition = targetSection.offsetTop - headerOffset;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            function updateActiveLink() {
+                let current = '';
+                sections.forEach((section) => {
+                    const sectionTop = section.offsetTop - 80;
+                    const sectionHeight = section.offsetHeight;
+                    if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach((link) => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                        const linkLeft = link.offsetLeft;
+                        const linkWidth = link.offsetWidth;
+                        indicator.style.width = `${linkWidth}px`;
+                        indicator.style.transform = `translateX(${linkLeft}px)`;
+                    }
+                });
+            }
+
+            function initializeIndicator() {
+                const firstLink = document.querySelector('.nav-link');
+                if (firstLink) {
+                    indicator.style.width = `${firstLink.offsetWidth}px`;
+                    indicator.style.transform = `translateX(${firstLink.offsetLeft}px)`;
+                    firstLink.classList.add('active');
+                }
+            }
+
+            window.addEventListener('scroll', () => {
+                requestAnimationFrame(updateActiveLink);
+            }, { passive: true });
+
+            window.addEventListener('resize', () => {
+                setTimeout(() => { initializeIndicator(); updateActiveLink(); }, 100);
+            }, { passive: true });
+
+            initializeIndicator();
+            updateActiveLink();
+        });
+    </script>
+</body>
+</html>
